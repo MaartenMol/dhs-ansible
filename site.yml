@@ -1,5 +1,6 @@
 ---
 - name: Install git
+  hosts: all
   win_chocolatey:
     name: git
     state: present
