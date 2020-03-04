@@ -1,3 +1,10 @@
+- hosts: all
+  tasks:
+    - name: Install git
+      win_chocolatey:
+        name: git
+        state: present
+
 - name: VBR Community Edition Setup
   hosts: all
   gather_facts: yes
@@ -57,11 +64,11 @@
             - 'ACCEPT_THIRDPARTY_LICENSES=1'
     tags: vbr
   - name: Install VBR Server
-    win_package:
-        path: "{{ vbr_source }}/Server.x64.msi"
+    win_chocolatey:
+        name: veeam-backup-and-replication-server
+        version: "10.0.0.4461"
+        package_params: "/sqlUsername:sa /sqlPassword:{{ sql_sapassword }} "
         state: present
-        product_id: "{A57424C6-B618-4E8D-A192-5F3379708E84}"
-        arguments: "VBR_SERVICE_ACCOUNT_TYPE=1 VBR_SQLSERVER_AUTHENTICATION=1 VBR_SQLSERVER_SERVER=(local)\\VEEAMSQL2016 VBR_SQLSERVER_USERNAME=sa VBR_SQLSERVER_PASSWORD={{ sql_sapassword }} ACCEPT_THIRDPARTY_LICENSES=1 ACCEPTEULA=YES"
     tags: vbr
   - name: Install VBR Console
     win_package:
