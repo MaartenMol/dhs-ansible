@@ -11,11 +11,13 @@
     win_package:
         path: "{{ vbr_source }}/SQLSysClrTypes.msi"
         state: present
+        product_id: "{68BA34E8-9B9D-4A74-83F0-7D366B532D75}"
     tags: pre
   - name: Pre - Install 2012 Shared management objects
     win_package:
         path: "{{ vbr_source }}/SharedManagementObjects.msi"
         state: present
+        product_id: "{1F9EB3B6-AED7-4AA7-B8F1-8E314B74B2A5}"
     tags: pre
   - name: SQL - Create Local SQL User
     win_user:
@@ -29,7 +31,7 @@
   - name: SQL - Install SQL 2016 Express
     win_package:
         path: "{{ vbr_source }}/SQLEXPR_x64_ENU.exe"
-        product_id: SQL 2016 Express
+        product_id: "{0C457EC3-E998-4041-B856-908D5A2C1708}"
         arguments: 
         - '/q'
         - '/ACTION=Install'
@@ -49,6 +51,7 @@
     win_package:
         path: "{{ vbr_source }}/VeeamBackupCatalog64.msi"
         state: present
+        product_id: "{61FB4546-C645-4A50-AD42-2D1EEF67AC08}"
         arguments:
             - 'VBRC_SERVICE_ACCOUNT_TYPE=1'
             - 'ACCEPT_THIRDPARTY_LICENSES=1'
@@ -57,12 +60,14 @@
     win_package:
         path: "{{ vbr_source }}/Server.x64.msi"
         state: present
+        product_id: "{A57424C6-B618-4E8D-A192-5F3379708E84}"
         arguments: "VBR_SERVICE_ACCOUNT_TYPE=1 VBR_SQLSERVER_AUTHENTICATION=1 VBR_SQLSERVER_SERVER=(local)\\VEEAMSQL2016 VBR_SQLSERVER_USERNAME=sa VBR_SQLSERVER_PASSWORD={{ sql_sapassword }} ACCEPT_THIRDPARTY_LICENSES=1 ACCEPTEULA=YES"
     tags: vbr
   - name: Install VBR Console
     win_package:
         path: "{{ vbr_source }}/Shell.x64.msi"
         state: present
+        product_id: "{B2C419DC-2143-468B-9835-DCACA71CA005}"
         arguments:
             - 'ACCEPTEULA=YES'
             - 'ACCEPT_THIRDPARTY_LICENSES=1'
