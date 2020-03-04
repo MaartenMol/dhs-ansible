@@ -2,19 +2,19 @@
   hosts: veeam
   gather_facts: yes
   vars:
-    vbr_source: "D:\\"
+    vbr_source: "http://172.27.72.103/Windows/Veeam/10.0.0.4461"
     sql_username: "svc_sql"
     sql_userpassword: "P@ssword"
     sql_sapassword: "P@ssword"
   tasks:
   - name: Pre - Install 2012 System CLR Types
     win_package:
-        path: "{{ vbr_source }}Redistr\\x64\\SQLSysClrTypes.msi"
+        path: "{{ vbr_source }}/SQLSysClrTypes.msi"
         state: present
     tags: pre
   - name: Pre - Install 2012 Shared management objects
     win_package:
-        path: "{{ vbr_source }}Redistr\\x64\\SharedManagementObjects.msi"
+        path: "{{ vbr_source }}/SharedManagementObjects.msi"
         state: present
     tags: pre
   - name: SQL - Create Local SQL User
@@ -28,7 +28,7 @@
     tags: pre
   - name: SQL - Install SQL 2016 Express
     win_package:
-        path: "{{ vbr_source }}Redistr\\x64\\SqlExpress\\2016SP1\\SQLEXPR_x64_ENU.exe"
+        path: "{{ vbr_source }}/SQLEXPR_x64_ENU.exe"
         product_id: SQL 2016 Express
         arguments: 
         - '/q'
@@ -47,7 +47,7 @@
     tags: sql
   - name: Install VBR Catalog
     win_package:
-        path: "{{ vbr_source }}Catalog\\VeeamBackupCatalog64.msi"
+        path: "{{ vbr_source }}/VeeamBackupCatalog64.msi"
         state: present
         arguments:
             - 'VBRC_SERVICE_ACCOUNT_TYPE=1'
@@ -55,13 +55,13 @@
     tags: vbr
   - name: Install VBR Server
     win_package:
-        path: "{{ vbr_source }}Backup\\Server.x64.msi"
+        path: "{{ vbr_source }}/Server.x64.msi"
         state: present
         arguments: "VBR_SERVICE_ACCOUNT_TYPE=1 VBR_SQLSERVER_AUTHENTICATION=1 VBR_SQLSERVER_SERVER=(local)\\VEEAMSQL2016 VBR_SQLSERVER_USERNAME=sa VBR_SQLSERVER_PASSWORD={{ sql_sapassword }} ACCEPT_THIRDPARTY_LICENSES=1 ACCEPTEULA=YES"
     tags: vbr
   - name: Install VBR Console
     win_package:
-        path: "{{ vbr_source }}Backup\\Shell.x64.msi"
+        path: "{{ vbr_source }}/Shell.x64.msi"
         state: present
         arguments:
             - 'ACCEPTEULA=YES'
@@ -69,7 +69,7 @@
     tags: vbr
   - name: Install VBR Explorer for ActiveDirectory
     win_package:
-        path: "{{ vbr_source }}Explorers\\VeeamExplorerForActiveDirectory.msi"
+        path: "{{ vbr_source }}/VeeamExplorerForActiveDirectory.msi"
         state: present
         arguments:
             - 'ACCEPT_EULA=1'
@@ -77,7 +77,7 @@
     tags: vbr
   - name: Install VBR Explorer for Exchange
     win_package:
-        path: "{{ vbr_source }}Explorers\\VeeamExplorerForExchange.msi"
+        path: "{{ vbr_source }}/VeeamExplorerForExchange.msi"
         state: present
         arguments:
             - 'ACCEPT_EULA=1'
@@ -85,7 +85,7 @@
     tags: vbr
   - name: Install VBR Explorer for Oracle
     win_package:
-        path: "{{ vbr_source }}Explorers\\VeeamExplorerForOracle.msi"
+        path: "{{ vbr_source }}/VeeamExplorerForOracle.msi"
         state: present
         arguments:
             - 'ACCEPT_EULA=1'
@@ -93,7 +93,7 @@
     tags: vbr
   - name: Install VBR Explorer for SharePoint
     win_package:
-        path: "{{ vbr_source }}Explorers\\VeeamExplorerForSharePoint.msi"
+        path: "{{ vbr_source }}/VeeamExplorerForSharePoint.msi"
         state: present
         arguments:
             - 'ACCEPT_EULA=1'
@@ -101,15 +101,9 @@
     tags: vbr
   - name: Install VBR Explorer for SQL
     win_package:
-        path: "{{ vbr_source }}Explorers\\VeeamExplorerForSQL.msi"
+        path: "{{ vbr_source }}/VeeamExplorerForSQL.msi"
         state: present
         arguments:
             - 'ACCEPT_EULA=1'
             - 'ACCEPT_THIRDPARTY_LICENSES=1'
     tags: vbr
-  - name: Install VBR Update 4a
-    win_package:
-        path: "{{ vbr_source }}Updates\\veeam_backup_9.5.4.2753.update4a_setup.exe"
-        product_id: VBR Update 4a
-        arguments: "/silent /noreboot VBR_AUTO_UPGRADE=1"
-    tags: update
