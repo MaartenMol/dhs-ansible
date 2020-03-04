@@ -1,0 +1,10 @@
+- name: Set Logos for AWX
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Set Header Logo
+    shell: docker exec awx_web bash -l -c "curl https://img.maartenmol.nl/test.svg > /var/lib/awx/public/static/assets/logo-header.svg"
+  - name: Set Favicon
+    shell: docker exec awx_web bash -l -c "curl https://raw.githubusercontent.com/MaartenMol/dhs-awx/master/awx/ui/client/assets/favicon.ico > /var/lib/awx/public/static/assets/favicon.ico"
+
+
