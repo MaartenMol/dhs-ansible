@@ -1,5 +1,5 @@
 - name: VBR Community Edition Setup
-  hosts: veeam
+  hosts: all
   gather_facts: yes
   vars:
     vbr_source: "http://172.27.72.103/Windows/Veeam/10.0.0.4461"
