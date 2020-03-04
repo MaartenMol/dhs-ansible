@@ -1,0 +1,9 @@
+- name: Build Templates
+  hosts: all
+  tasks:
+  - name: Build Windows 10
+    docker_container:
+      name: build-windows-10
+      auto_remove: no
+      image: maartenmol/dhs-packer
+      command: ["packer build -force -var 'vcenter_pass=VD!fli9ht' -var-file 'vars_vcenter.json' Windows_10.json"]

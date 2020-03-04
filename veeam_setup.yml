@@ -1,10 +1,3 @@
-- hosts: all
-  tasks:
-    - name: Install git
-      win_chocolatey:
-        name: git
-        state: present
-
 - name: VBR Community Edition Setup
   hosts: all
   gather_facts: yes
