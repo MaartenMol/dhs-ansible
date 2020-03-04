@@ -30,7 +30,7 @@
     tags: pre
   - name: SQL - Install SQL 2016 Express
     win_package:
-        path: "{{ vbr_source }}/SQLEXPR_x64_ENU.exe"
+        path: "C:\\extra\\SQLEXPR_x64_ENU.exe"
         product_id: "{0C457EC3-E998-4041-B856-908D5A2C1708}"
         arguments: 
         - '/q'
