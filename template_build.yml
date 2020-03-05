@@ -1,6 +1,10 @@
 - name: Build Templates
   hosts: all
   tasks:
+  - name: Pull Builder Image
+    docker_image:
+      name: maartenmol/dhs-packer
+      source: pull
   - name: Build Windows 10
     docker_container:
       name: build-windows-10
