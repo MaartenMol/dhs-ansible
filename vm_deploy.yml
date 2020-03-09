@@ -23,6 +23,7 @@
           datastore: '{{ deploy_vsphere_datastore }}'
         networks:
         - name: FlightCase Network
+          type: static
           ip: '{{ guest_custom_ip }}'
           netmask: 255.255.255.0
           gateway: 172.27.72.1
@@ -44,3 +45,11 @@
         wait_for_customization: yes
         wait_for_ip_address: yes
       delegate_to: localhost
+    - name: Install multiple packages
+      win_chocolatey:
+        name:
+        - notepadplusplus
+        - git
+        - windirstat
+        - openssh
+        state: present
