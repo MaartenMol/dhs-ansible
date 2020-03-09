@@ -6,7 +6,7 @@
     # Deploy a VM from a template using Ansible 'vmware_guest' module
     - name: Deploy VM from template
       vmware_guest:
-        hostname: dhsnext-vc-01.dhsnext.nl
+        hostname: 172.27.72.3
         username: administrator@vsphere.local
         password: VD!fli9ht
         validate_certs: no
