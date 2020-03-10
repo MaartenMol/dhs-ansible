@@ -53,3 +53,8 @@
         - windirstat
         - openssh
         state: present
+    - name: Install the Kaseya Agent (Test nextGoud)
+      win_package:
+        path: https://nextbeheer.dhs.nl/mkDefault.asp?id=91218921
+        product_id: 'KADHSNF983289444115196'
+        arguments: /e /c /g=root.test_nextgoud /s
