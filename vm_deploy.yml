@@ -45,7 +45,8 @@
         wait_for_customization: yes
         wait_for_ip_address: yes
       delegate_to: localhost
-    - name: Install multiple packages
+    - name: Install multiple Windows packages
+      when: ansible_facts['os_family'] == "Windows"
       win_chocolatey:
         name:
         - notepadplusplus
@@ -54,7 +55,18 @@
         - openssh
         state: present
     - name: Install the Kaseya Agent (Test nextGoud)
+      when: ansible_facts['os_family'] == "Windows"
       win_package:
         path: https://nextbeheer.dhs.nl/mkDefault.asp?id=91218921
         product_id: 'KADHSNF983289444115196'
         arguments: /e /c /g=root.test_nextgoud /s
+    - name: Download Kaseya for Linux
+      when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+      get_url:
+        url: https://nextbeheer.dhs.nl/mkDefault.asp?id=84214887
+        force: no
+        dest: /opt/KccAgent.sh
+        mode: '0755'
+    - name: Run Kaseya for Linux Installer
+      when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+      shell: /opt/KccAgent.sh
